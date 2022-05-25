@@ -1,35 +1,26 @@
 t = int(input())
-saida = []
+
+def interseccao(cx, cy, raio, rx, ry, w, h):
+    cDx = abs(cx - (rx + w / 2))
+    cDy = abs(cy - (ry + h / 2))
+    
+    if cDx > ((w/2) + raio) or cDy > (h / 2 + raio):
+        return False
+    elif cDx <= (w/2) or cDy <= h/2:
+        return True
+    else:
+        return (((cDx - w/2) ** 2) + ((cDy - h/2) ** 2)) <= (raio ** 2)
+    
+magia_raio = {"fire": {"1": 20, "2": 30, "3": 50}, "water": {"1": 10, "2": 25, "3": 40}, "earth": {"1": 25, "2": 55, "3": 70}, "air": {"1": 18, "2": 38, "3": 60}}
+
+dano = {"fire": 200, "water": 300, "earth": 400, "air": 100}
 
 for i in range(t):
     w, h, x0, y0 = map(int, input().split())
     linha2 = list(input().split())
-    magia, n, cx, cy = linha2[0], int(linha2[1]), int(linha2[2]), int(linha2[3])
+    magia, n, cx, cy = linha2[0], linha2[1], int(linha2[2]), int(linha2[3])
 
-    dano = 0
-    deuDano = False
-
-    if n == 1:
-        if cx - 20 <= x0 + h <= cx + 20 and cy - 20 <= y0 + h <= cy + 20:
-            deuDano = True
-    elif n == 2:
-        if cx - 30 <= x0 + h <= cx + 30 and cy - 30 <= y0 + h <= cy + 30:
-            deuDano = True
-    elif n == 3:
-        if cx - 50 <= x0 + h <= cx + 50 and cy - 50 <= y0 + h <= cy + 50:
-            deuDano = True
-    
-    if deuDano:
-        if magia == "fire":
-            dano = 200
-        elif magia == "water":
-            dano = 300
-        elif magia == "earth":
-            dano = 400
-        elif magia == "air":
-            dano = 100
-
-    saida.append(dano)
-
-for i in range(t):
-    print(saida[i])
+    if interseccao(cx, cy, magia_raio[magia][n], x0, y0, w, h) == True:
+        print(dano[magia])
+    else:
+        print(0)

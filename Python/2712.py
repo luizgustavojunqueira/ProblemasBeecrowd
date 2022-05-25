@@ -8,7 +8,7 @@ for i in range(n):
 
     placa = input()
 
-    if regExPlaca.match(placa):
+    if regExPlaca.match(placa) and len(placa) == 8:
         digitoFinal = int(placa[7])
 
         if digitoFinal == 1 or digitoFinal == 2:

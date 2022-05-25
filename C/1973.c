@@ -1,65 +1,53 @@
-/*
-    NÂO FUNCIONA AINDA
-*/
-
-
 #include <stdio.h>
-
-int main(){
-
-    int n, atual = 0, totalCarneiros = 0, carneirosRoubados = 0, numAnterior = 0, ultimaPos = 0, numRoubadas = 0;
-
-    scanf("%d",&n);
-
-    int numCarneiros[n], estrelasRoubadas[n];
-
-    for(int i=0; i<n; i++)
+int main()
+{
+    long long int N, i;
+    scanf("%lld", &N);
+    long long int star[N], sheep[N];
+    long long int sum_trak=0, sum_sheep=0;
+    for(i=0; i<N; i++)
     {
-        scanf("%d", &numCarneiros[i]);
-        totalCarneiros += numCarneiros[i];
-        estrelasRoubadas[i] = 0;
+        scanf("%lld", &sheep[i]);
+        star[i]=0;
     }
-
-    while(1){
-
-        if(numCarneiros[atual] > 0){
-
-            numAnterior = numCarneiros[atual];
-
-            carneirosRoubados += 1;
-            numCarneiros[atual] -= 1;
-
-            int roubada = 0;
-
-            for(int i = 0; i < n; i++){
-                if(estrelasRoubadas[i] == atual){
-                    roubada = 1;
-                }
-            }
-
-            if(roubada == 0){
-                estrelasRoubadas[ultimaPos] = atual;
-                ultimaPos += 1;
-                numRoubadas += 1;
-            }
-
-            if((numAnterior % 2) == 0){
-                atual -= 1;
-            }else{
-                atual += 1;
-            }
-
-        }else{
+    i=0;
+    while(1)
+    {
+        if(i==0 && sheep[i]%2==0)
+        {
+            star[i]=1;
+            if(sheep[i]>0)
+                sheep[i]--;
             break;
         }
-
-        if(atual < 0 || atual >= n){
+        else if(i==N-1 && sheep[i]%2==1)
+        {
+            star[i]=1;
+            if(sheep[i]>0)
+                sheep[i]--;
             break;
         }
+        else if(sheep[i]%2==1)
+        {
+            sheep[i]--;
+            star[i]=1;
+            i++;
+        }
+        else if(sheep[i]%2==0)
+        {
+            star[i]=1;
+            if(sheep[i]>0)
+                sheep[i]--;
+            i--;
+        }
+
 
     }
-
-    printf("%i %i\n", numRoubadas+1, totalCarneiros - carneirosRoubados);
-
+    for(i=0; i<N; i++)
+    {
+        sum_sheep += sheep[i];
+        sum_trak += star[i];
+    }
+    printf("%lld %lld\n", sum_trak, sum_sheep);
     return 0;
 }
